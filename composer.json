@@ -1,0 +1,31 @@
+{
+    "name": "nhockizi/laravel-settings",
+    "description": "laravel settings",
+    "type": "library",
+    "keywords": ["laravel", "nhockizi"],
+    "homepage": "https://github.com/nhockizi/laravel-settings",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nhockizi",
+            "email": "nhockizi@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4",
+        "laravel/framework": "5.3.*"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "6.2.3",
+        "symfony/css-selector": "3.2.8",
+        "symfony/dom-crawler": "3.2.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kizi\\Setting\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
