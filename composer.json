@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Kizi\\Setting\\": "src/"
+            "Kizi\\Settings\\": "src/"
         },
         "files": [
             "src/helpers.php"
