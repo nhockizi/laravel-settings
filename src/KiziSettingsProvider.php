@@ -5,6 +5,7 @@ namespace Kizi\Settings;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Kizi\Settings\ThemesServiceProvider;
 
 class KiziSettingsProvider extends ServiceProvider
 {
@@ -21,7 +22,9 @@ class KiziSettingsProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([__DIR__ . '/../config/kizi.settings.php' => config_path('kizi.settings.php')], 'kizi-settings');
+        // $this->publishes([__DIR__ . '/../config/kizi.settings.php' => config_path('kizi.settings.php')], 'kizi-settings');
+        $this->publishes([__DIR__ . '/../config/modules.php' => config_path('modules.php')], 'kizi-modules');
+        $this->publishes([__DIR__ . '/../config/themes.php' => config_path('themes.php')], 'kizi-themes');
     }
 
     /**
@@ -32,6 +35,7 @@ class KiziSettingsProvider extends ServiceProvider
     public function register()
     {
         $this->registerRouteMiddleware();
+        $this->registerClass();
         $this->commands($this->commands);
     }
     /**
@@ -42,5 +46,13 @@ class KiziSettingsProvider extends ServiceProvider
     protected function registerRouteMiddleware()
     {
 
+    }
+    /**
+     * Register all modules.
+     */
+    protected function registerClass()
+    {
+        $this->app->register(ThemesServiceProvider::class);
+        $this->app->register(LaravelModulesServiceProvider::class);
     }
 }

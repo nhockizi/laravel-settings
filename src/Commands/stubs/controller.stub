@@ -1,98 +1,72 @@
 <?php
 
-namespace DummyNamespace;
+namespace $CLASS_NAMESPACE$;
 
-use DummyModelNamespace;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
 
-use Kizi\Settings\Form;
-use Kizi\Settings\Grid;
-use Kizi\Settings\Facades\Admin;
-use Kizi\Settings\Layout\Content;
-use App\Http\Controllers\Controller;
-use Kizi\Settings\Controllers\ModelForm;
-
-class DummyClass extends Controller
+class $CLASS$ extends Controller
 {
-    use ModelForm;
-
     /**
-     * Index interface.
-     *
-     * @return Content
+     * Display a listing of the resource.
+     * @return Response
      */
     public function index()
     {
-        return Admin::content(function (Content $content) {
-
-            $content->header('header');
-            $content->description('description');
-
-            $content->body($this->grid());
-        });
+        return view('$LOWER_NAME$::index');
     }
 
     /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
-    public function edit($id)
-    {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header('header');
-            $content->description('description');
-
-            $content->body($this->form()->edit($id));
-        });
-    }
-
-    /**
-     * Create interface.
-     *
-     * @return Content
+     * Show the form for creating a new resource.
+     * @return Response
      */
     public function create()
     {
-        return Admin::content(function (Content $content) {
-
-            $content->header('header');
-            $content->description('description');
-
-            $content->body($this->form());
-        });
+        return view('$LOWER_NAME$::create');
     }
 
     /**
-     * Make a grid builder.
-     *
-     * @return Grid
+     * Store a newly created resource in storage.
+     * @param  Request $request
+     * @return Response
      */
-    protected function grid()
+    public function store(Request $request)
     {
-        return Admin::grid(DummyModel::class, function (Grid $grid) {
-
-            $grid->id('ID')->sortable();
-
-            $grid->created_at();
-            $grid->updated_at();
-        });
     }
 
     /**
-     * Make a form builder.
-     *
-     * @return Form
+     * Show the specified resource.
+     * @return Response
      */
-    protected function form()
+    public function show()
     {
-        return Admin::form(DummyModel::class, function (Form $form) {
+        return view('$LOWER_NAME$::show');
+    }
 
-            $form->display('id', 'ID');
+    /**
+     * Show the form for editing the specified resource.
+     * @return Response
+     */
+    public function edit()
+    {
+        return view('$LOWER_NAME$::edit');
+    }
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
-        });
+    /**
+     * Update the specified resource in storage.
+     * @param  Request $request
+     * @return Response
+     */
+    public function update(Request $request)
+    {
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @return Response
+     */
+    public function destroy()
+    {
     }
 }
