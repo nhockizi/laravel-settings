@@ -72,10 +72,18 @@ class CrawlerCommand extends Command
     private function crawlerLink($url)
     {
         set_time_limit(0);
+        // $proxy   = array();
+        // $proxy[] = '47.89.53.92:3128';
+        // $proxy[] = '1.239.89.210:8080';
+        // $proxy[] = '113.252.236.96:8080';
+        // $proxy[] = '222.82.222.242:9999';
+        // $proxy[] = '92.99.142.59:8118';
+        // $proxy[] = '80.1.116.80:80';
+        // $rand    = rand(0, 5);
         try {
             $config = [
                 // 'proxy'          => [
-                //     'http' => '113.252.236.96:8080',
+                //     'http' => $proxy[$rand],
                 // ],
                 'verify'         => false,
                 'decode_content' => false,
@@ -131,6 +139,10 @@ class CrawlerCommand extends Command
             krsort($result);
             $this->news->insert($result);
             CrawlerDb::where(['id' => $dataCrawler->id])->decrement('number_run', 1);
+            // if ($dataCrawler->number_run > 1) {
+            //     sleep(10);
+            //     $this->call('crawler', ['function' => 'getContent', '--code=abc1']);
+            // }
         } else {
             $this->info('Got empty result processing the dataset!');
         }
