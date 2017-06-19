@@ -5,6 +5,7 @@ namespace Kizi\Settings\Providers;
 use Illuminate\Support\ServiceProvider;
 use Kizi\Settings\Commands\CommandCommand;
 use Kizi\Settings\Commands\ControllerCommand;
+use Kizi\Settings\Commands\CrawlerCommand;
 use Kizi\Settings\Commands\DisableCommand;
 use Kizi\Settings\Commands\DumpCommand;
 use Kizi\Settings\Commands\EnableCommand;
@@ -78,6 +79,7 @@ class ConsoleServiceProvider extends ServiceProvider
         GenerateJobCommand::class,
         GenerateMailCommand::class,
         GenerateNotificationCommand::class,
+        CrawlerCommand::class,
     ];
 
     /**
