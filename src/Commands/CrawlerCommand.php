@@ -5,7 +5,10 @@ namespace Kizi\Settings\Commands;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
 use Illuminate\Console\Command;
+use Kizi\Settings\Auth\Database\Category;
+use Kizi\Settings\Auth\Database\CategoryNews;
 use Kizi\Settings\Auth\Database\CrawlerDb;
+use Kizi\Settings\Auth\Database\News;
 use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlerCommand extends Command
@@ -31,13 +34,21 @@ class CrawlerCommand extends Command
      */
     protected $directory = '';
 
+    public $news;
+
+    public $category;
+
+    public $categoryNews;
     /**
      * Execute the console command.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(News $news, Category $category, CategoryNews $categoryNews)
     {
+        $this->news         = $news;
+        $this->category     = $category;
+        $this->categoryNews = $categoryNews;
         parent::__construct();
     }
     /**
@@ -63,9 +74,9 @@ class CrawlerCommand extends Command
         set_time_limit(0);
         try {
             $config = [
-                'proxy'          => [
-                    'http' => '113.252.236.96:8080',
-                ],
+                // 'proxy'          => [
+                //     'http' => '113.252.236.96:8080',
+                // ],
                 'verify'         => false,
                 'decode_content' => false,
             ];
@@ -96,32 +107,33 @@ class CrawlerCommand extends Command
         $result    = array();
         if (iterator_count($filter) > 0) {
             foreach ($filter as $i => $content) {
-                $cralwer = new Crawler($content);
-                // $urlDetail = $cralwer->filter($dataCrawler->url_detail)->attr('href');
-                // if($this->checkUrl($urlDetail) === false){
-                //     $urlDetail = $dataCrawler->url . $urlDetail;
-                // }
-                // $htmlDetail = Main::crawlerLink($urlDetail);
-                // $detail = new Crawler($htmlDetail);
+                $cralwer   = new Crawler($content);
+                $urlDetail = $cralwer->filter($dataCrawler->url_detail)->attr('href');
+                if ($this->checkUrl($urlDetail) === false) {
+                    $urlDetail = $dataCrawler->url . $urlDetail;
+                }
+                $htmlDetail = $this->crawlerLink($urlDetail);
+                $detail     = new Crawler($htmlDetail);
                 $result[$i] = array(
                     'images'      => null,
                     'title'       => $cralwer->filter($dataCrawler->title)->text(),
                     'description' => $cralwer->filter($dataCrawler->description)->text(),
-                    // 'detail' => $detail->filter($dataCrawler->detail)->text(),
+                    'detail'      => $detail->filter($dataCrawler->detail)->text(),
                 );
                 if ($dataCrawler->images !== '') {
                     $srcImages = $cralwer->filter($dataCrawler->images)->attr('src');
-                    dd($srcImages);
+                    $srcImages = $dataCrawler->url . str_replace($dataCrawler->url, '', $srcImages);
                     if ($dataCrawler->images != '' && $this->checkUrl($srcImages) === true) {
                         $result[$i]['images'] = $srcImages;
                     }
                 }
             }
-            // CrawlerDb::where(['id' => $dataCrawler->id])->decrement('number_run', 1);
+            krsort($result);
+            $this->news->insert($result);
+            CrawlerDb::where(['id' => $dataCrawler->id])->decrement('number_run', 1);
         } else {
             $this->info('Got empty result processing the dataset!');
         }
-        dd($result);
     }
     public function checkUrl($url)
     {

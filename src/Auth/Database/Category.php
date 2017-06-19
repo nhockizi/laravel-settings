@@ -4,7 +4,7 @@ namespace Kizi\Settings\Auth\Database;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CrawlerDb extends Model
+class Category extends Model
 {
     /**
      * Create a new Eloquent model instance.
@@ -15,11 +15,9 @@ class CrawlerDb extends Model
     {
         $connection = config('admin.database.connection') ?: config('database.default');
 
-        $this->timestamps = false;
-
         $this->setConnection($connection);
 
-        $this->setTable(config('admin.database.crawler_table'));
+        $this->setTable(config('admin.database.category_table'));
 
         parent::__construct($attributes);
     }
