@@ -13,7 +13,7 @@ class KiziSettingsProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        'Kizi\Settings\Commands\InstallSettings',
+        'Kizi\Settings\Commands\KiziInstallSettings',
     ];
     /**
      * Bootstrap the application services.
@@ -54,5 +54,6 @@ class KiziSettingsProvider extends ServiceProvider
     {
         $this->app->register(ThemesServiceProvider::class);
         $this->app->register(LaravelModulesServiceProvider::class);
+        $this->app->register(Providers\AdminServiceProvider::class);
     }
 }
