@@ -1,9 +1,10 @@
-<?php namespace Modules\Core\Http\Controllers\Admin;
+<?php
+namespace Kizi\Settings\Http\Controllers\Admin;
 
 use FloatingPoint\Stylist\Facades\ThemeFacade as Theme;
 use Illuminate\Routing\Controller;
-use Modules\Core\Foundation\Asset\Manager\AssetManager;
-use Modules\Core\Foundation\Asset\Pipeline\AssetPipeline;
+use Kizi\Settings\Foundation\Asset\Manager\AssetManager;
+use Kizi\Settings\Foundation\Asset\Pipeline\AssetPipeline;
 use Pingpong\Modules\Facades\Module;
 
 class AdminBaseController extends Controller
@@ -19,7 +20,7 @@ class AdminBaseController extends Controller
 
     public function __construct()
     {
-        $this->assetManager = app(AssetManager::class);
+        $this->assetManager  = app(AssetManager::class);
         $this->assetPipeline = app(AssetPipeline::class);
 
         $this->addAssets();

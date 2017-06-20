@@ -5,7 +5,7 @@ use Illuminate\Console\Command;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Kizi\Settings\Commands\Installers\SetupScript;
-use Modules\Core\Services\Composer;
+use Kizi\Settings\Services\Composer;
 
 abstract class ProviderInstaller implements SetupScript
 {
@@ -58,9 +58,9 @@ abstract class ProviderInstaller implements SetupScript
 
         // Publish asgard configs
         if ($this->command->option('verbose')) {
-            $this->command->call('vendor:publish', ['--provider' => 'Modules\Core\Providers\CoreServiceProvider']);
+            $this->command->call('vendor:publish', ['--provider' => 'Kizi\Settings\Providers\CoreServiceProvider']);
         } else {
-            $this->command->callSilent('vendor:publish', ['--provider' => 'Modules\Core\Providers\CoreServiceProvider']);
+            $this->command->callSilent('vendor:publish', ['--provider' => 'Kizi\Settings\Providers\CoreServiceProvider']);
         }
 
         if (!$this->checkIsInstalled()) {
@@ -149,7 +149,7 @@ abstract class ProviderInstaller implements SetupScript
             "Modules\\User\\Repositories\\$driver\\{$driver}RoleRepository"
         );
         $this->application->bind(
-            'Modules\Core\Contracts\Authentication',
+            'Kizi\Settings\Contracts\Authentication',
             "Modules\\User\\Repositories\\$driver\\{$driver}Authentication"
         );
     }

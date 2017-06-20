@@ -30,7 +30,7 @@ class ProtectInstaller implements SetupScript
     public function fire(Command $command)
     {
         if ($this->finder->isFile('.env') && !$command->option('force')) {
-            throw new Exception('Admin has already been installed. You can already log into your administration.');
+            throw new Exception('Settings has already been installed.');
         }
     }
 }
