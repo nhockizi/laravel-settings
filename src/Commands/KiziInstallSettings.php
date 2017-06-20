@@ -66,6 +66,9 @@ class KiziInstallSettings extends Command
             \Kizi\Settings\Commands\Installers\Scripts\SetAppKey::class,
         ])->install($this);
         if ($success) {
+            $this->call('vendor:publish', [
+                '--provider' => \Kizi\Settings\KiziSettingsProvider::class,
+            ]);
             $this->info('Settings ready! You can use');
         }
     }

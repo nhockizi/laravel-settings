@@ -23,7 +23,7 @@ class CreateAdminTables extends Migration
         });
         Schema::connection($connection)->create(config('admin.database.batch_schedule_table'), function (Blueprint $table) {
             $table->increments('id');
-            $table->string('command',50)->nullable();
+            $table->string('command', 50)->nullable();
             $table->text('comment')->nullable();
             $table->string('status', 50)->nullable();
             $table->string('time_command', 255)->nullable();
@@ -44,7 +44,7 @@ class CreateAdminTables extends Migration
         });
         Schema::connection($connection)->create(config('admin.database.crawler_table'), function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code',10)->unique();
+            $table->string('code', 10)->unique();
             $table->string('url', 50)->nullable();
             $table->text('parame_url')->nullable();
             $table->tinyInteger('number_run')->default(1);

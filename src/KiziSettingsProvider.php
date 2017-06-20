@@ -22,9 +22,8 @@ class KiziSettingsProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $this->publishes([__DIR__ . '/../config/kizi.settings.php' => config_path('kizi.settings.php')], 'kizi-settings');
-        $this->publishes([__DIR__ . '/../config/modules.php' => config_path('modules.php')], 'kizi-modules');
-        $this->publishes([__DIR__ . '/../config/themes.php' => config_path('themes.php')], 'kizi-themes');
+        $this->publishes([__DIR__ . '/../config/admin.php' => config_path('admin.php')], 'admin');
+        $this->publishes([__DIR__ . '/../config/modules.php' => config_path('modules.php')], 'modules');
     }
 
     /**
