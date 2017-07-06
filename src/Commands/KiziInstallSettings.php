@@ -66,11 +66,12 @@ class KiziInstallSettings extends Command
             \Kizi\Settings\Commands\Installers\Scripts\SetAppKey::class,
         ])->install($this);
         if ($success) {
-            $this->call('vendor:publish', [
-                '--provider' => \Kizi\Settings\KiziSettingsProvider::class,
-            ]);
             $this->info('Settings ready! You can use');
         }
+        $this->call('vendor:publish', [
+            '--provider' => \Kizi\Settings\KiziSettingsProvider::class,
+        ]);
+        $this->publishDatabase();
     }
 
     protected function getOptions()
@@ -78,5 +79,16 @@ class KiziInstallSettings extends Command
         return [
             ['force', 'f', InputOption::VALUE_NONE, 'Force the installation, even if already installed'],
         ];
+    }
+    /**
+     * Create tables and seed it.
+     *
+     * @return void
+     */
+    public function publishDatabase()
+    {
+        $this->call('migrate', ['--path' => str_replace(base_path(), '', __DIR__) . '/../../migrations/']);
+
+        $this->call('db:seed', ['--class' => \Kizi\Settings\Auth\Database\AdminTablesSeeder::class]);
     }
 }
